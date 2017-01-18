@@ -1,0 +1,202 @@
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+  <head>
+      <meta charset="utf-8">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title></title>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.4-rc2/foundation.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation-icons/3.0/foundation-icons.min.css">
+      <link rel="stylesheet" href="css/main.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  </head>
+
+  <body>
+    <noscript>
+      <p>This page requires a JavaScript-enabled browser.</p>
+    </noscript>
+
+    <!-- TOP AND TITLE BAR    -->
+    <div data-sticky-container>
+      <div class="small-12 sticky" data-sticky data-sticky-on="small" >
+
+        <div class="title-bar" data-responsive-toggle="main-menu" data-hide-for="medium">
+          <button class="menu-icon" type="button" data-toggle></button>
+          <div class="title-bar-title">Find recipes by ingredient app</div>
+        </div>
+
+        <div class="top-bar" id="main-menu">
+          <div id="topBarLeft" class="top-bar-left">
+            <ul class=" menu hide-for-small-only" data-dropdown-menu>
+              <li class="menu-text">Find recipes by ingredient </li>
+            </ul>
+          </div>
+
+          <div id="topBarRight" class="top-bar-right">
+            <ul class="menu accordion-menu vertical medium-horizontal" data-responsive-menu="accordion medium-dropdown">
+              <li><a id="aboutApp" href="#" data-toggle="about">What's this about?</a></li>
+
+            </ul>
+          </div>
+        </div>
+
+        <!--  STORY DISPLAY  -->
+        <div id="about" class="row " data-toggler=".slideIn">
+          <div id="showStory" class=""></div>
+        </div>
+
+
+      </div>
+    </div>
+
+<!--end TOP AND TITLE BAR    -->
+<h1></h1>
+<form id="rForm" >
+<div class="inputs small-12 columns">
+
+   <h2>Recipe input</h2>
+
+
+
+    <div class="container row small-12 medium-6 columns">
+
+   <div class="ctrl left baseline small-12 columns">
+     <label for="recipeInput" >Recipe name:</label>
+     <input id="recipeInput" class="styleInput" type="text" name="recipeInput"  value="" placeholder="recipe name"  >
+      <div class="warning">
+                <small id="recipeWarning" class=""></small>
+              </div>
+ </div>
+   </div>
+
+
+<div class="container row small-12  columns">
+  <div class="">
+   <div id="ingrForm" class="left  small-12 medium-6 columns">
+      <p>Has ingredient:</p>
+   </div>
+
+    <div id="" class="right baseline small-12 medium-6 columns">
+       <label>Add ingredient to list:
+       <input id="ingredientInput" class="styleInput" type="text" name="ingredientInput"  value="" placeholder="add new ingredient" ></label>
+       <button type="button" id="ingrButton">Insert ingredient</button>
+
+       <div class="warning">
+                <small id="ingrWarning" class=""></small>
+              </div>
+     </div>
+     </div>
+
+  </div>
+
+<div class="container row small-12 columns">
+   <div class="left small-12 medium-6 columns">
+      <label for="bookList">Book:</label>
+     <select id="bookList" class="styleInput"  size="5" ></select>
+   </div>
+
+    <div class="right baseline small-12 medium-6 columns">
+     <label >Add book to list:
+     <input id="bookInput" class="styleInput" type="text" name="bookInput"  value="" placeholder="add new title" ></label>
+       <button type="button" id="bookButton">Insert book</button>
+        <div class="warning">
+                <small id="bookWarning" class=""></small>
+              </div>
+     </div>
+        </div>
+
+
+
+
+  <div class="container row small-12 medium-6 columns">
+
+   <div class="left baseline small-12 columns">
+     <label for="pageInput"> Page:</label>
+     <input id="pageInput" class="styleInput" type="text" name="pageInput"  value="" placeholder="page number" >
+   </div>
+ </div>
+
+ <div class="container row small-12 columns">
+
+   <div class="left small-12 medium-6 columns">
+      <label >Recipe type:</label>
+      <select id="typeList" size="2"></select>
+   </div>
+
+        <div class="right baseline small-12 medium-6 columns">
+
+       <label>Add Recipe type to list:
+     <input id="typeInput" type="text" name="typeInput"  value="" placeholder="vegetarian, fish, etc" ></label>
+           <button type="button" id="typeButton">Insert type</button>
+           <div class="warning">
+                <small id="typeWarning" class=""></small>
+              </div>
+   </div>
+
+</div>
+
+    <div class="container row small-12 medium-6 columns">
+
+  <div class="left small-12 columns">
+     <label for="remarksArea">Remarks:</label>
+    <textarea id="remarksArea" class="styleTextarea"  type="textarea"  name="remarksArea"  value="" placeholder=""></textarea>
+   </div>
+
+  </div>
+
+      <button type="submit" id="submButton">Store this info </button>
+   <div class="notify">
+                <small id="recNotify" class=""></small>
+              </div>
+
+    </div>
+
+
+<!--
+<div class="">
+ <h2>Recipe object:</h2>
+<div id="result" ></div>
+</div>  -->
+
+  </div>
+
+</form >
+
+<form id="iForm">
+<div class="inputs small-12 columns">
+
+ <h2>Show recipes by ingredient</h2>
+ <div class="container row small-12 medium-6 columns">
+
+   <div class="left baseline small-12  columns">
+     <label for="chosen">Ingredient:</label>
+     <input id="chosen" class="styleInput" type="text" name="chosen"  value="" placeholder="ingredient name"  >
+   </div>
+
+
+
+</div>
+                                                                                                               <button type="submit" id="searchButton">Search recipes </button>
+    <div class="warning">
+                <small id="searchWarning" class=""></small>
+              </div>
+
+    <div id="result2" class="small-12 medium-6 columns end  "  ></div>
+ </div>
+
+
+
+    </form>
+
+
+
+
+
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/foundation/6.2.4-rc2/foundation.min.js"></script> 
+    <script src="js/main.js"></script>
+
+    </body>
+</html>
