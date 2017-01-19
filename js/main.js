@@ -1,6 +1,7 @@
 $(document).foundation()
 
-var recNotify = document.getElementById("recNotify");
+var result = document.getElementById("result");
+var result2 = document.getElementById("result2");
 var bookList = document.getElementById("bookList");
 var typeList = document.getElementById("typeList");
 
@@ -12,13 +13,13 @@ var typeButton = document.getElementById("typeButton");
 var searchButton = document.getElementById("searchButton");
 
 //recipeInput.addEventListener("keydown", clearWarning);
-recipeInput.addEventListener("keydown", clearNotify);
+recipeInput.addEventListener("keydown", clearResult);
 submButton.addEventListener("click", storeRecipe);
 ingrButton.addEventListener("click", addIngredient);
 bookButton.addEventListener("click", addBook);
 typeButton.addEventListener("click", addType);
 searchButton.addEventListener("click", searchRecipe);
-searchButton.addEventListener("click", clearNotify);
+searchButton.addEventListener("click", clearResult);
 
 var ingrArray = ["koriander", "pecorino", "bosui", "slagroom"];
 ingrArray.sort();
@@ -38,6 +39,51 @@ else {
   recipeArray = JSON.parse(recipeString);
 }
 
+
+function init() {
+  var aboutApp = document.getElementById("aboutApp");
+  aboutApp.addEventListener("click", aboutThisApp);
+  var hidden = true;
+
+
+function aboutThisApp(e) {   
+  e.preventDefault();
+  var showStory = document.getElementById("showStory");
+
+  if (hidden) {
+		aboutApp.innerHTML = "I've read enough";
+		hidden = false;
+	}
+	else {
+		aboutApp.innerHTML = "What's this about?";
+		hidden = true;
+	}
+  showStory.innerHTML = "";
+  var string = "";
+	var h4 = document.createElement("h4");
+	h4.innerHTML = "About this app";
+  string = "Do you have some left over ingredients? <br />" +
+  "  Do you want to find recipes where those ingredients are used? <br/> " +
+  " This app lets you store and find recipes by ingredients";
+  var p = document.createElement("p");
+  p.innerHTML = string;
+  showStory.appendChild(h4);
+	showStory.appendChild(p);
+  }
+
+  buildOptions(bookList, bookArray);
+  buildOptions(typeList, typeArray);
+  buildCheckboxes(ingrArray);
+
+  var inputs = document.querySelectorAll("[type='text'], [type='textarea']");
+  inputs.forEach(function(item,index) {
+    item.addEventListener("keydown", clearMessage);
+
+  });
+
+
+}
+
 /*
 function selectColor(e) {
   this.style.backgroundColor=this.options[this.selectedIndex].style.backgroundColor;
@@ -50,9 +96,8 @@ function caseInsensitive(s1, s2) {
   return s1lower > s2lower? 1 : (s1lower < s2lower? -1 : 0);
 }
 
-function clearFormElements(formId)  {
-    var nElements = formId.elements.length;
-    for (var i = 0; i < nElements; i++)    {
+function clearFormElements(formId)  {  
+    for (var i = 0, all = formId.elements.length; i < all; i++)    {
         if (formId.elements[i].type === "text" || formId.elements[i].type === "textarea") {
             formId.elements[i].value = "";
         }
@@ -67,13 +112,20 @@ function clearFormElements(formId)  {
     }
 }
 
-/* 
-function clearWarning(e) {  
-  recipeWarning.innerHTML = "";
-}   */
-
+ 
+function clearMessage(e) {  
+  var messages = document.getElementsByTagName("small"); 
+  for(var i = 0, all = messages.length; i < all; i++ ){
+    messages[i].innerHTML = "";
+  }  
+}   
+/*
 function clearNotify(e) { 
   recNotify.innerHTML = "";
+}  */
+
+function clearResult(e) { 
+  result.innerHTML = "";
 }
 
 // helper function to check if item has already been inserted
@@ -81,7 +133,7 @@ function compare(newInput, array, warningElement) {
   warningElement.innerHTML = "";
   var different = true;
 
-  for(var i = 0; i < array.length; i++) {
+  for(var i = 0, all = array.length ; i < all; i++) {
     if(newInput === array[i]) {
       warningElement.innerHTML = "This item is already in the list!";
       different = false;
@@ -186,23 +238,7 @@ function buildCheckboxes(array) {
     ingrForm.appendChild(cbox);
   });
 }
-buildOptions(bookList, bookArray);
-buildOptions(typeList, typeArray);
-buildCheckboxes(ingrArray);
 
-/* adds or removes chosen ingredients 
-whenever user checks or unchecks ingredient checkboxes */
-function ingredientChoice(e) {
-  if (e.target.checked) {  
-    ingrChoices.push(this.value);
-  }
-  else {  
-    var index = ingrChoices.indexOf(this.value);
-    if (index) { 
-      ingrChoices.splice(index, 1); 
-    }
-  }
-}
 
 //creates individual option element
 function createOption(text, list) {
@@ -221,6 +257,26 @@ function buildOptions(list, array) {
     list[0].selected = "true";
   });
 }
+
+
+
+
+
+/* adds or removes chosen ingredients 
+whenever user checks or unchecks ingredient checkboxes */
+function ingredientChoice(e) {
+  if (e.target.checked) {  
+    ingrChoices.push(this.value);
+  }
+  else {  
+    var index = ingrChoices.indexOf(this.value);
+    if (index) { 
+      ingrChoices.splice(index, 1); 
+    }
+  }
+}
+
+/* CREATION OF RECIPE */
 
 // constructor/prototype pattern
 function Recipe(name,book,page,type,remark) {
@@ -245,6 +301,7 @@ Recipe.prototype.changeIngredients = function(ingredient) {
    }
   this.ingredients.push(ingredient);
 };
+
 
 /* executes when 'Store this info' button is clicked */
 function storeRecipe(e) {
@@ -271,22 +328,28 @@ function storeRecipe(e) {
     newRec.addIngredient(item);
   });
 
- // showRecipe(newRec);
-/*var gember = "gember";
-  newRec.changeIngredients(gember);
-   console.log(newRec);
-  console.log(newRec.ingredients);
-  var koriander = "koriander";
-  newRec.changeIngredients(koriander);  */
+  showNewRecipe(newRec);
+
   recipeArray.push(newRec);
   localStorage.setItem("recipeArray", JSON.stringify(recipeArray));
   console.log(recipeArray);
   clearFormElements(rForm);
-  recNotify.innerHTML= "This info is stored!";
+  //recNotify.innerHTML= "This info is stored!";
 }
 
-function showRecipe(recipe) {
+
+
+
+function showNewRecipe(recipe) {
   var result = document.getElementById("result");
+  result.setAttribute("class", "small-12 medium-6 columns end ");
+  var div = document.createElement("div");    
+  div.setAttribute("class", "show"); 
+  result.appendChild(div);
+  var h2 = document.createElement("h2");
+  var text = document.createTextNode("Your new recipe:");
+  h2.appendChild(text);
+  div.appendChild(h2);
 
   for(var prop in recipe) {
 
@@ -294,34 +357,23 @@ function showRecipe(recipe) {
       if(recipe[prop] !== "" || recipe[prop].length !== 0) {
 
        var p = document.createElement("p");
-       var text = document.createTextNode("recipe." + prop + " = " + recipe[prop]);
-       p.appendChild(text);
-       result.setAttribute("class", "show ");
-       result.appendChild(p);
+       var text = document.createTextNode(prop + ": " + recipe[prop]);
+       p.appendChild(text);       
+       div.appendChild(p);
       }
     }
-    //else break;
  }
 }
 
-function searchRecipe(e) {
-  e.preventDefault();
-  var chosen = document.getElementById("chosen");
-  var searchWarning = document.getElementById("searchWarning");
-  var result2 = document.getElementById("result2");
+function displayRecipe(ingredient) {
   var found = false;  
-  
-  searchWarning.innerHTML = "";
- // result2.addAttribute("class", "show");
-  result2.innerHTML = "";
-  var h2 = document.createElement("h2");
-  var text = document.createTextNode("Recipes with  " + chosen.value);
-  h2.appendChild(text);
-  result2.appendChild(h2);
-  
+  result2.setAttribute("class", "small-12 medium-6 columns end  ");    
+  var div = document.createElement("div");     
+  result2.appendChild(div);
+  div.setAttribute("class", "show");
   recipeArray.forEach(function(item,index) {
     item.ingredients.forEach(function(entry,index){
-      if (entry === chosen.value) {
+      if (entry === ingredient) {
        found = true;
        var p = document.createElement("p");
        var span = document.createElement("span");
@@ -337,51 +389,43 @@ function searchRecipe(e) {
        var br = document.createElement("br");
        p.appendChild(br);
        var text = document.createTextNode("remarks: " + item.remark);
-       p.appendChild(text);
-
-       result2.setAttribute("class", "small-12 medium-6 columns end show ");
-       result2.appendChild(p);
+       p.appendChild(text); 
+       
+       div.appendChild(p);
           }
     });
-
   });
   if (!found) {
     result2.innerHTML = "";
     var h2 = document.createElement("h2");
-    var text = document.createTextNode("Sorry, no recipes with " + chosen.value + " stored yet");
+    var text = document.createTextNode("Sorry, no recipes with " + chosenInput.value + " stored yet");
      h2.appendChild(text);
      result2.appendChild(h2);
   }
   clearFormElements(iForm);
 }
 
-
-var aboutApp = document.getElementById("aboutApp");
-aboutApp.addEventListener("click", aboutThisApp);
-var hidden = true;
-
-
-function aboutThisApp(e) {   
+function searchRecipe(e) {
   e.preventDefault();
-  var showStory = document.getElementById("showStory");
+  var chosenInput = document.getElementById("chosenInput");
+  var searchWarning = document.getElementById("searchWarning");
+  
+  var ingredient = chosenInput.value;  
+  if (ingredient === "") {
+    searchWarning.innerHTML = "Please enter an ingredient!"
+    return;
+  }
+  
+  searchWarning.innerHTML = "";
+ // result2.addAttribute("class", "show");
+  result2.innerHTML = "";
+  var h2 = document.createElement("h2");
+  var text = document.createTextNode("Recipes with  " + ingredient);
+  h2.appendChild(text);
+  result2.appendChild(h2);
 
-  if (hidden) {
-		aboutApp.innerHTML = "I've read enough";
-		hidden = false;
-	}
-	else {
-		aboutApp.innerHTML = "What's this about?";
-		hidden = true;
-	}
-  showStory.innerHTML = "";
-var string = "";
-	var h4 = document.createElement("h4");
-	h4.innerHTML = "About this app";
-string = "Do you have some left over ingredients? <br />" +
-"  Do you want to find recipes where those ingredients are used? <br/> " +
- " This app lets you store and find recipes by ingredients";
-  var p = document.createElement("p");
-  p.innerHTML = string;
-  showStory.appendChild(h4);
-	showStory.appendChild(p);
+  displayRecipe(ingredient);  
 }
+
+
+init();

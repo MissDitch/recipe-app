@@ -51,8 +51,9 @@
 
 <!--end TOP AND TITLE BAR    -->
 <h1></h1>
+<div class="row small-12 colums">
 <form id="rForm" >
-<div class="inputs small-12 columns">
+  <div class="inputs small-12 columns">
 
    <h2>Recipe input</h2>
 
@@ -148,50 +149,45 @@
    <div class="notify">
                 <small id="recNotify" class=""></small>
               </div>
-
     </div>
 
-
-<!--
-<div class="">
- <h2>Recipe object:</h2>
-<div id="result" ></div>
-</div>  -->
-
-  </div>
-
 </form >
+</div>
 
-<form id="iForm">
-<div class="inputs small-12 columns">
+
+<div class="results row small-12 columns ">
+  <div id="result" class=""></div>
+</div>
+
+
+<div class="row small-12 colums">
+  <form id="iForm">
+    <div class="inputs  small-12 columns">
 
  <h2>Show recipes by ingredient</h2>
  <div class="container row small-12 medium-6 columns">
 
    <div class="left baseline small-12  columns">
-     <label for="chosen">Ingredient:</label>
-     <input id="chosen" class="styleInput" type="text" name="chosen"  value="" placeholder="ingredient name"  >
+     <label for="chosenInput">Ingredient:</label>
+     <input id="chosenInput" class="styleInput" type="text" name="chosenInput"  value="" placeholder="ingredient name"  >
+      <div class="warning">
+        <small id="searchWarning" class=""></small>
+    </div>   
    </div>
 
-
-
+    
 </div>
                                                                                                                <button type="submit" id="searchButton">Search recipes </button>
-    <div class="warning">
-                <small id="searchWarning" class=""></small>
-              </div>
-
-    <div id="result2" class="small-12 medium-6 columns end  "  ></div>
+  
  </div>
 
+  </form>
+</div>
 
 
-    </form>
-
-
-
-
-
+<div class="results row small-12 columns ">
+   <div id="result2" class=" "  ></div>
+</div>
 
   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
