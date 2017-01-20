@@ -45,7 +45,7 @@ select {
     outline: none;
   height: 7rem;
 }
-select option:checked {
+select option:selected {
     font-weight: 700;
 }
 label {
@@ -140,12 +140,12 @@ button[type=button] {
 .notify {
   color: var(--light);
 }
-#result2 span {
+div.show span{
   font-size: 1.2rem;
   font-weight: 700;
   color: var(--dark);
 }
-#result2 p {
+div.show p {
   line-height: 1.5rem;
 
 }

@@ -26,7 +26,7 @@ ingrArray.sort();
 var bookArray = ["Smaak van mijn herinnering", "China Modern", "Big Book of Basics", "Joodse Keuken"];
 bookArray.sort();
 
-var typeArray = ["none", "vegetarian", "fish"];
+var typeArray = ["nothing in particular", "vegetarian", "fish"];
 var ingrChoices = [];
 var recipeArray = [];
 
@@ -100,10 +100,8 @@ function clearFormElements(formId)  {
         if (formId.elements[i].type === "checkbox") {
            formId.elements[i].checked = false;
         }
-/*
-        if (formId.elements[i].type === "textarea") {
-            formId.elements[i].value = "";
-        }  */
+        buildOptions(bookList, bookArray);     
+        buildOptions(typeList, typeArray);       
     }
 }
 
@@ -115,7 +113,9 @@ function clearMessage(e) {
 }   
 
 function clearResult(e) { 
-  result.innerHTML = "";
+  if (result.innerHTML !== "") {
+    result.innerHTML = "";
+  } 
 }
 
 
@@ -303,16 +303,23 @@ function makeRecipe(e) {
     rForm.recipeInput.focus();
     return;
   }
+  
   var rec = recipeInput.value;
   var bookChoice =  bookList.value;
   var page = pageInput.value;
+  if (page === "") { 
+    page = "not specified";
+  }
   var type = typeList.value;
   var rem = remarksArea.value;
+  if (rem === "") { 
+    rem = "not specified";
+  }
   var newRec = new Recipe(rec, bookChoice, page, type, rem);
 
   ingrChoices.forEach(function(item,index) {
     newRec.addIngredient(item);
-  });
+  });  
 
   showNewRecipe(newRec);
 
@@ -336,11 +343,25 @@ function createRecipeItem(recipe) {
   var p = document.createElement("p");
   var span = document.createElement("span");
   var text = document.createTextNode(recipe.name);
+  //var recipe = recipe;
   span.appendChild(text);
-  p.appendChild(span);
-  text = document.createTextNode(" in " + recipe.book + ", page " + recipe.page);
+  p.appendChild(span);  
+  
+  text = document.createTextNode(" in " + recipe.book + ", page: " + recipe.page);
   p.appendChild(text);
   var br = document.createElement("br");
+  p.appendChild(br);
+  var ingredients = "";
+  var length = recipe.ingredients.length;
+  for (var i = 0; i < length; i++) {
+    ingredients += recipe.ingredients[i] + " ";
+  }
+  if (length === 0) { 
+    ingredients = "not specified";
+    }  
+  text = document.createTextNode("ingredient(s): " + ingredients); 
+  p.appendChild(text);
+  br = document.createElement("br");
   p.appendChild(br);
   text = document.createTextNode("type: " + recipe.type); 
   p.appendChild(text);
