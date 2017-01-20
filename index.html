@@ -18,7 +18,7 @@
 
     <!-- TOP AND TITLE BAR    -->
     <div data-sticky-container>
-      <div class="small-12 sticky" data-sticky data-sticky-on="small" >
+      <div class="small-12 sticky card-3" data-sticky data-sticky-on="small" >
 
         <div class="title-bar" data-responsive-toggle="main-menu" data-hide-for="medium">
           <button class="menu-icon" type="button" data-toggle></button>
@@ -33,15 +33,14 @@
           </div>
 
           <div id="topBarRight" class="top-bar-right">
-            <ul class="menu accordion-menu vertical medium-horizontal" data-responsive-menu="accordion medium-dropdown">
+            <ul class="menu accordion-menu vertical medium-horizontal" data-responsive-menu="accordion medium-dropdown">            
               <li><a id="aboutApp" href="#" data-toggle="about">What's this about?</a></li>
-
             </ul>
           </div>
         </div>
 
         <!--  STORY DISPLAY  -->
-        <div id="about" class="row " data-toggler=".slideIn">
+        <div id="about" class="row card-4" data-toggler=".slideIn">
           <div id="showStory" class=""></div>
         </div>
 
@@ -51,7 +50,8 @@
 
 <!--end TOP AND TITLE BAR    -->
 <h1></h1>
-<div class="row small-12 colums">
+<div class="row small-12">
+  <div class="circle"></div>
 <form id="rForm" >
   <div class="inputs small-12 columns">
 
@@ -63,7 +63,8 @@
 
    <div class="ctrl left baseline small-12 columns">
      <label for="recipeInput" >Recipe name:</label>
-     <input id="recipeInput" class="styleInput" type="text" name="recipeInput"  value="" placeholder="recipe name"  >
+     <input id="recipeInput" class="styleInput card-inverse {
+" type="text" name="recipeInput"  value="" placeholder="recipe name"  >
       <div class="warning">
                 <small id="recipeWarning" class=""></small>
               </div>
@@ -79,8 +80,8 @@
 
     <div id="" class="right baseline small-12 medium-6 columns">
        <label>Add ingredient to list:
-       <input id="ingredientInput" class="styleInput" type="text" name="ingredientInput"  value="" placeholder="add new ingredient" ></label>
-       <button type="button" id="ingrButton">Insert ingredient</button>
+       <input id="ingredientInput" class="styleInput card-inverse" type="text" name="ingredientInput"  value="" placeholder="add new ingredient" ></label>
+       <button type="button"id="ingrButton" class="card-2">Insert ingredient</button>
 
        <div class="warning">
                 <small id="ingrWarning" class=""></small>
@@ -93,13 +94,13 @@
 <div class="container row small-12 columns">
    <div class="left small-12 medium-6 columns">
       <label for="bookList">Book:</label>
-     <select id="bookList" class="styleInput"  size="5" ></select>
+     <select id="bookList" class="styleInput card-inverse"  size="5" ></select>
    </div>
 
     <div class="right baseline small-12 medium-6 columns">
      <label >Add book to list:
-     <input id="bookInput" class="styleInput" type="text" name="bookInput"  value="" placeholder="add new title" ></label>
-       <button type="button" id="bookButton">Insert book</button>
+     <input id="bookInput" class="styleInput card-inverse" type="text" name="bookInput"  value="" placeholder="add new title" ></label>
+       <button type="button" id="bookButton" class="card-2" >Insert book</button>
         <div class="warning">
                 <small id="bookWarning" class=""></small>
               </div>
@@ -113,7 +114,7 @@
 
    <div class="left baseline small-12 columns">
      <label for="pageInput"> Page:</label>
-     <input id="pageInput" class="styleInput" type="text" name="pageInput"  value="" placeholder="page number" >
+     <input id="pageInput" class="styleInput card-inverse" type="text" name="pageInput"  value="" placeholder="page number" >
    </div>
  </div>
 
@@ -121,14 +122,14 @@
 
    <div class="left small-12 medium-6 columns">
       <label >Recipe type:</label>
-      <select id="typeList" size="2"></select>
+      <select id="typeList"  class="card-inverse" size="2"></select>
    </div>
 
         <div class="right baseline small-12 medium-6 columns">
 
        <label>Add Recipe type to list:
-     <input id="typeInput" type="text" name="typeInput"  value="" placeholder="vegetarian, fish, etc" ></label>
-           <button type="button" id="typeButton">Insert type</button>
+     <input id="typeInput" class="styleInput card-inverse"  type="text" name="typeInput"  value="" placeholder="vegetarian, fish, etc" ></label>
+           <button type="button" id="typeButton" class="card-2" >Insert type</button>
            <div class="warning">
                 <small id="typeWarning" class=""></small>
               </div>
@@ -140,12 +141,14 @@
 
   <div class="left small-12 columns">
      <label for="remarksArea">Remarks:</label>
-    <textarea id="remarksArea" class="styleTextarea"  type="textarea"  name="remarksArea"  value="" placeholder=""></textarea>
+    <textarea id="remarksArea" class="styleTextarea card-inverse"  type="textarea"  name="remarksArea"  value="" placeholder=""></textarea>
    </div>
 
   </div>
 
-      <button type="submit" id="submButton">Store this info </button>
+<div class="buttonContainer">
+      <button type="submit" id="submButton" class="card-3">Store this info </button>
+</div>
    <div class="notify">
                 <small id="recNotify" class=""></small>
               </div>
@@ -160,16 +163,18 @@
 </div>
 
 
-<div class="row small-12 colums">
+<div class="row small-12 ">
+   
   <form id="iForm">
     <div class="inputs  small-12 columns">
+      <div class="circle"></div>
 
  <h2>Show recipes by ingredient</h2>
  <div class="container row small-12 medium-6 columns">
 
    <div class="left baseline small-12  columns">
      <label for="chosenInput">Ingredient:</label>
-     <input id="chosenInput" class="styleInput" type="text" name="chosenInput"  value="" placeholder="ingredient name"  >
+     <input id="chosenInput" class="styleInput card-inverse" type="text" name="chosenInput"  value="" placeholder="ingredient name"  >
       <div class="warning">
         <small id="searchWarning" class=""></small>
     </div>   
@@ -177,8 +182,9 @@
 
     
 </div>
-                                                                                                               <button type="submit" id="searchButton">Search recipes </button>
-  
+<div class="buttonContainer">
+    <button type="submit" id="searchButton" class="card-3">Search recipes </button>
+ </div> 
  </div>
 
   </form>

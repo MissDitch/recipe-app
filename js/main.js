@@ -416,7 +416,7 @@ function searchRecipe(e) {
 
 function displayRecipe(ingredient) {
   var found = false;  
-  result2.setAttribute("class", "small-12 medium-6 columns end  ");    
+  result2.setAttribute("class", "small-12 columns end  ");    
   var div = document.createElement("div");   
   div.setAttribute("class", "show");  
     

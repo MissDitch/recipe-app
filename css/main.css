@@ -81,42 +81,55 @@ textarea {
 a {
    outline: none;
 }
-button[type=submit], button[type=button] {
-  margin: 0.3rem 0 0 0;
-  background-color: var(--accent);
-  border: 0px;
-  border-radius: 2rem;
+button[type="submit"], button[type="button"] {  
+  background-color: var(--dark);
+  border: 0.1rem solid var(--accent); 
   padding: 1rem;
-  color: #000;
+  color: #ffffff;
   font-weight: 500;
-      font-size: 0.8rem;
+  font-size: 0.8rem;
   outline: none;
   display: inline-block;
 }
-button[type=button] {
+button[type="submit"] {
+  width: 6rem;
+    height: 6rem;
+    position: absolute;
+    left: 12rem;
+    border-radius: 12rem;
+    margin: -3rem 0 1rem 0;
+}
+button[type="button"] {
   background-color: transparent;
+  border-radius: 2rem;
+  margin: 0.3rem 0 0 0;
 }
 .menu-icon {
   margin: 0.1rem 1rem;
   height: 0.8rem;
 }
+.menu-text {
+  font-size: 1.3rem;
+  letter-spacing: 0.1rem;
+}
 .right button {
   background-color: var(--dark);
-  color: #fff;
-  padding: 0.5rem 1rem;
+      margin: 1rem 0 0.5rem 3rem;
+  padding: 0.7rem 1rem;
 }
 .inputs {
+  position: relative;
   margin: 0 auto;
 }
 
 .container {
-   font-weight: 400;
+  font-weight: 400;
   background: #fff;
   border: var(--light) solid 0.5rem;
 }
 .container, .show {
   border-radius: 1rem;
-  margin: 0.5rem 0;
+  margin: 1.5rem 0;
   padding: 1rem;
 
 }
@@ -175,8 +188,6 @@ div.show p {
 	-webkit-transform: translate(-21rem,0);
 }
 
-
-
 .title-bar {
   background: var(--dark);
   padding: 0.9rem;
@@ -187,15 +198,17 @@ div.show p {
   vertical-align: top;
   margin-left: 1rem;
 }
+.title-bar .menu-icon {   
+    border: none;
+}
 
 .top-bar {
   background:var(--dark);
   margin-top: -1rem;
 }
 .top-bar ul {
-  background: var(--default);
-  color: #ffffff;
-  border-radius: 2rem;
+  background: none;
+  color: #ffffff;  
 }
 .top-bar-right ul li {
    list-style-type: none;
@@ -204,6 +217,11 @@ div.show p {
    border-top: 0.1rem solid var(--default);
 
  }
+ .top-bar-right ul {
+   background: var(--default);
+   border: 0.1rem solid var(--accent);
+   border-radius: 2rem;   
+ }  
  .top-bar-right ul li:first-child {
    border-top: none;
  }
@@ -221,3 +239,67 @@ li.is-submenu-item.is-accordion-submenu-item {
   border-color: #ffffff transparent transparent;
   right: 0;
 }
+
+.card-1 {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.2s ease-in-out;
+}
+.card-1:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);  /* card-3 */
+}
+
+.card-2 {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    transition: all 0.2s ease-in-out;
+  }
+.card-2:hover {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22); /* card-4 */
+    transition: all 0.2s ease-in-out;
+  }
+
+.card-3 {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    transition: all 0.2s ease-in-out;
+  }
+.card-3:hover {
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22); /* card-5 */
+    transition: all 0.2s ease-in-out;
+  }
+
+.card-4 {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  }
+
+.card-5 {
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  }
+.card-inverse {
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.20), inset 0 4px 8px rgba(0,0,0,0.25);
+}
+
+
+  .circle {
+  /* content: '';
+  //  display: inline-block;  */
+    position: absolute;
+    width: 10rem;
+    height: 10rem;
+    top: 1rem;
+    left: -1rem;
+    z-index: -5;
+    margin-right: 0.5rem;
+    -moz-border-radius: 5rem;
+    -webkit-border-radius: 5rem;
+    border-radius: 5rem;
+    background-color: var(--accent);
+}
+
+#iForm .circle {
+    top: -2rem;
+    left: -2rem;
+}
+.buttonContainer {
+  position: relative;
+  height: 3rem;
+}
+   
