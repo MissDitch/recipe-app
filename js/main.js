@@ -12,9 +12,8 @@ var bookButton = document.getElementById("bookButton");
 var typeButton = document.getElementById("typeButton");
 var searchButton = document.getElementById("searchButton");
 
-//recipeInput.addEventListener("keydown", clearWarning);
 recipeInput.addEventListener("keydown", clearResult);
-submButton.addEventListener("click", storeRecipe);
+submButton.addEventListener("click", makeRecipe);
 ingrButton.addEventListener("click", addIngredient);
 bookButton.addEventListener("click", addBook);
 typeButton.addEventListener("click", addType);
@@ -84,10 +83,6 @@ function aboutThisApp(e) {
 
 }
 
-/*
-function selectColor(e) {
-  this.style.backgroundColor=this.options[this.selectedIndex].style.backgroundColor;
-}   */
 
 /* helper function for sort(), makes sorting of entries case-insensitive   */
 function caseInsensitive(s1, s2) {
@@ -112,21 +107,21 @@ function clearFormElements(formId)  {
     }
 }
 
- 
 function clearMessage(e) {  
   var messages = document.getElementsByTagName("small"); 
   for(var i = 0, all = messages.length; i < all; i++ ){
     messages[i].innerHTML = "";
   }  
 }   
-/*
-function clearNotify(e) { 
-  recNotify.innerHTML = "";
-}  */
 
 function clearResult(e) { 
   result.innerHTML = "";
 }
+
+
+
+/* --------------  EDITING OF FORM ITSELF  -----------------------*/ 
+ 
 
 // helper function to check if item has already been inserted
 function compare(newInput, array, warningElement) {
@@ -139,6 +134,7 @@ function compare(newInput, array, warningElement) {
       different = false;
     }
   }
+
   return different;
 }
 
@@ -157,28 +153,19 @@ function addIngredient() {
      buildCheckboxes(ingrArray);
      ingredientInput.value = "";
     }
-
   }
 }
-/* 
-function addOption(input,array, list) {
-   var text = input.value;
-  array.push(text);
-  array.sort(caseInsensitive);
-  buildOptions(list, array);
-  input.value = "";
-}
-*/
+
 function addBook() {
   var bookInput = document.getElementById("bookInput");
   var bookWarning = document.getElementById("bookWarning");  
   var bookList = document.getElementById("bookList");
-  //var text = bookInput.value;
 
   if (bookInput.value === "") {
     bookWarning.innerHTML = "Please enter a book title!"
     return;
   }
+
   if (compare(bookInput.value, bookArray, bookWarning) ) {
     bookArray.push(bookInput.value);
     bookArray.sort(caseInsensitive);
@@ -196,13 +183,15 @@ function addType() {
     typeWarning.innerHTML = "Please enter a Recipe type!"
     return;
   }
+
   if (compare(text, typeArray, typeWarning)) {
     typeArray.push(text);
-  //typeArray.sort(caseInsensitive); 
-  buildOptions(typeList, typeArray);
-  typeInput.value = "";
+    buildOptions(typeList, typeArray);
+    typeInput.value = "";
   }
 }
+
+/* --------------  CREATION OF FORM ELEMENTS -----------------------*/ 
 
 //creates individual ingredient checkbox
 function createCheckbox(text, index) {
@@ -212,14 +201,15 @@ function createCheckbox(text, index) {
   cb.setAttribute("id", "cbox" + index);
   cb.setAttribute("value", text);
   cb.addEventListener("click", ingredientChoice);
+  div.appendChild(cb);
 
   var label = document.createElement("label");
   label.setAttribute("for", "cbox" + index );
   var node = document.createTextNode(text);
 
-  label.appendChild(node);
-  div.appendChild(cb);
+  label.appendChild(node); 
   div.appendChild(label);
+
   return div;
 }
 
@@ -238,7 +228,6 @@ function buildCheckboxes(array) {
     ingrForm.appendChild(cbox);
   });
 }
-
 
 //creates individual option element
 function createOption(text, list) {
@@ -259,24 +248,7 @@ function buildOptions(list, array) {
 }
 
 
-
-
-
-/* adds or removes chosen ingredients 
-whenever user checks or unchecks ingredient checkboxes */
-function ingredientChoice(e) {
-  if (e.target.checked) {  
-    ingrChoices.push(this.value);
-  }
-  else {  
-    var index = ingrChoices.indexOf(this.value);
-    if (index) { 
-      ingrChoices.splice(index, 1); 
-    }
-  }
-}
-
-/* CREATION OF RECIPE */
+/* --------------  CREATION OF RECIPE -----------------------*/ 
 
 // constructor/prototype pattern
 function Recipe(name,book,page,type,remark) {
@@ -302,9 +274,23 @@ Recipe.prototype.changeIngredients = function(ingredient) {
   this.ingredients.push(ingredient);
 };
 
+/* adds or removes chosen ingredients 
+whenever user checks or unchecks ingredient checkboxes */
+function ingredientChoice(e) {
+  if (e.target.checked) {  
+    ingrChoices.push(this.value);
+  }
+  else {  
+    var index = ingrChoices.indexOf(this.value);
+    if (index) { 
+      ingrChoices.splice(index, 1); 
+    }
+  }
+}
 
-/* executes when 'Store this info' button is clicked */
-function storeRecipe(e) {
+
+/* input is gathered for creation and storing of newly created recipe */
+function makeRecipe(e) {
   e.preventDefault();
   var recipeWarning = document.getElementById("recipeWarning");
   var rForm = document.getElementById("rForm");
@@ -334,98 +320,99 @@ function storeRecipe(e) {
   localStorage.setItem("recipeArray", JSON.stringify(recipeArray));
   console.log(recipeArray);
   clearFormElements(rForm);
-  //recNotify.innerHTML= "This info is stored!";
 }
 
 
+/* helper function displays heading that is displayed for search result or newly created recipe */
+function createHeading(string) {
+  var h2 = document.createElement("h2");
+  var text = document.createTextNode(string);
+  h2.appendChild(text);
+  return h2;
+}
 
+/* helper function creates and formats recipe line that is displayed for search result or newly created recipe*/
+function createRecipeItem(recipe) {  
+  var p = document.createElement("p");
+  var span = document.createElement("span");
+  var text = document.createTextNode(recipe.name);
+  span.appendChild(text);
+  p.appendChild(span);
+  text = document.createTextNode(" in " + recipe.book + ", page " + recipe.page);
+  p.appendChild(text);
+  var br = document.createElement("br");
+  p.appendChild(br);
+  text = document.createTextNode("type: " + recipe.type); 
+  p.appendChild(text);
+  br = document.createElement("br");
+  p.appendChild(br);
+  text = document.createTextNode("remarks: " + recipe.remark);
+  p.appendChild(text);  
+  return p;
+}
 
+/* when button "Store this info" is clicked, the newly created recipe is shown */
 function showNewRecipe(recipe) {
   var result = document.getElementById("result");
-  result.setAttribute("class", "small-12 medium-6 columns end ");
+  result.setAttribute("class", "small-12 medium-6 columns end ");  
+  
+  var heading = createHeading("Your new recipe:");
+  var p = createRecipeItem(recipe);
+
   var div = document.createElement("div");    
   div.setAttribute("class", "show"); 
-  result.appendChild(div);
-  var h2 = document.createElement("h2");
-  var text = document.createTextNode("Your new recipe:");
-  h2.appendChild(text);
-  div.appendChild(h2);
+  div.appendChild(heading);  
+  div.appendChild(p);
 
-  for(var prop in recipe) {
+  result.appendChild(div); 
+}
 
-    if(recipe.hasOwnProperty(prop)  ) {  //&& newRec[prop] != ""
-      if(recipe[prop] !== "" || recipe[prop].length !== 0) {
 
-       var p = document.createElement("p");
-       var text = document.createTextNode(prop + ": " + recipe[prop]);
-       p.appendChild(text);       
-       div.appendChild(p);
-      }
-    }
- }
+/* --------------  SEARCH FOR RECIPES -----------------------*/ 
+
+function searchRecipe(e) {
+  e.preventDefault();
+  var chosenInput = document.getElementById("chosenInput");
+  var searchWarning = document.getElementById("searchWarning");  
+  var ingredient = chosenInput.value;  
+  if (ingredient === "") {
+    searchWarning.innerHTML = "Please enter an ingredient!"
+    return;
+  }  
+  searchWarning.innerHTML = "";
+  result2.innerHTML = "";
+  var heading = createHeading("Recipes with " + ingredient); 
+  result2.appendChild(heading);
+
+  displayRecipe(ingredient);  
 }
 
 function displayRecipe(ingredient) {
   var found = false;  
   result2.setAttribute("class", "small-12 medium-6 columns end  ");    
-  var div = document.createElement("div");     
-  result2.appendChild(div);
-  div.setAttribute("class", "show");
+  var div = document.createElement("div");   
+  div.setAttribute("class", "show");  
+    
   recipeArray.forEach(function(item,index) {
     item.ingredients.forEach(function(entry,index){
       if (entry === ingredient) {
-       found = true;
-       var p = document.createElement("p");
-       var span = document.createElement("span");
-       var text = document.createTextNode(item.name);
-       span.appendChild(text);
-       p.appendChild(span);
-       var text = document.createTextNode(" in " + item.book + ", page " + item.page);
-       p.appendChild(text);
-       var br = document.createElement("br");
-       p.appendChild(br);
-       var text = document.createTextNode("type: " + item.type); // +  " remarks: " + item.remark
-       p.appendChild(text);
-       var br = document.createElement("br");
-       p.appendChild(br);
-       var text = document.createTextNode("remarks: " + item.remark);
-       p.appendChild(text); 
-       
-       div.appendChild(p);
-          }
+        found = true;
+        var p = createRecipeItem(item);    
+        div.appendChild(p);
+      }
     });
   });
+  result2.appendChild(div);
+
   if (!found) {
     result2.innerHTML = "";
-    var h2 = document.createElement("h2");
-    var text = document.createTextNode("Sorry, no recipes with " + chosenInput.value + " stored yet");
-     h2.appendChild(text);
-     result2.appendChild(h2);
+    var heading = createHeading("Sorry, no recipes with " + ingredient + " stored yet");
+    result2.appendChild(heading);
   }
   clearFormElements(iForm);
 }
 
-function searchRecipe(e) {
-  e.preventDefault();
-  var chosenInput = document.getElementById("chosenInput");
-  var searchWarning = document.getElementById("searchWarning");
-  
-  var ingredient = chosenInput.value;  
-  if (ingredient === "") {
-    searchWarning.innerHTML = "Please enter an ingredient!"
-    return;
-  }
-  
-  searchWarning.innerHTML = "";
- // result2.addAttribute("class", "show");
-  result2.innerHTML = "";
-  var h2 = document.createElement("h2");
-  var text = document.createTextNode("Recipes with  " + ingredient);
-  h2.appendChild(text);
-  result2.appendChild(h2);
 
-  displayRecipe(ingredient);  
-}
 
 
 init();
