@@ -30,6 +30,12 @@ var typeArray = ["nothing in particular", "vegetarian", "fish"];
 var ingrChoices = [];
 var recipeArray = [];
 
+/* // only use this if you want to clear localStorage
+localStorage.setItem("recipeArray", JSON.stringify(recipeArray));
+
+// and comment out the code below
+*/
+
 if (!localStorage.getItem("recipeArray")) {
   localStorage.setItem("recipeArray", JSON.stringify(recipeArray));
 }
@@ -77,7 +83,6 @@ function aboutThisApp(e) {
   var inputs = document.querySelectorAll("[type='text'], [type='textarea']");
   inputs.forEach(function(item,index) {
     item.addEventListener("keydown", clearMessage);
-
   });
 
 
@@ -200,7 +205,7 @@ function createCheckbox(text, index) {
   cb.setAttribute("type", "checkbox");
   cb.setAttribute("id", "cbox" + index);
   cb.setAttribute("value", text);
-  cb.addEventListener("click", ingredientChoice);
+ // cb.addEventListener("change", ingredientChoice);
   div.appendChild(cb);
 
   var label = document.createElement("label");
@@ -233,7 +238,7 @@ function buildCheckboxes(array) {
 function createOption(text, list) {
   var option = document.createElement("option");
   option.text = text;
-  option.addEventListener("change", ingredientChoice);
+ // option.addEventListener("change", ingredientChoice);
   list.add(option);
 }
 
@@ -274,18 +279,17 @@ Recipe.prototype.changeIngredients = function(ingredient) {
   this.ingredients.push(ingredient);
 };
 
-/* adds or removes chosen ingredients 
-whenever user checks or unchecks ingredient checkboxes */
-function ingredientChoice(e) {
-  if (e.target.checked) {  
-    ingrChoices.push(this.value);
-  }
-  else {  
-    var index = ingrChoices.indexOf(this.value);
-    if (index) { 
-      ingrChoices.splice(index, 1); 
+
+/* gathers all checked boxes at submission */
+function chosenIngredients() {
+  var array = document.querySelectorAll('input[type="checkbox"]');
+  var checkboxValues = [];
+  for (var i = 0, length = array.length; i < length; i++) {
+    if (array[i].checked == true) {
+      checkboxValues.push(array[i].value);
     }
   }
+  return checkboxValues;
 }
 
 
@@ -317,7 +321,8 @@ function makeRecipe(e) {
   }
   var newRec = new Recipe(rec, bookChoice, page, type, rem);
 
-  ingrChoices.forEach(function(item,index) {
+  var ingredients = chosenIngredients();
+  ingredients.forEach(function(item,index) {
     newRec.addIngredient(item);
   });  
 
@@ -327,6 +332,7 @@ function makeRecipe(e) {
   localStorage.setItem("recipeArray", JSON.stringify(recipeArray));
   console.log(recipeArray);
   clearFormElements(rForm);
+  ingrChoices.length = 0;
 }
 
 
