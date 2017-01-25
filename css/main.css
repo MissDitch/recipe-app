@@ -87,7 +87,7 @@ button[type="submit"], button[type="button"] {
   padding: 1rem;
   color: #ffffff;
   font-weight: 500;
-  font-size: 0.8rem;
+  text-align: center;
   outline: none;
   display: inline-block;
 }
@@ -98,12 +98,28 @@ button[type="submit"] {
     left: 12rem;
     border-radius: 12rem;
     margin: -3rem 0 1rem 0;
+    font-size: 1rem;
+    line-height: 1.2rem;
 }
 button[type="button"] {
   background-color: transparent;
-  border-radius: 2rem;
+  border-radius: 2rem; 
   margin: 0.3rem 0 0 0;
+  font-size: 0.7rem;
 }
+.right button {
+  background-color: var(--dark);
+margin: 1rem 0 0.5rem 3rem;
+padding: 0.4rem;
+width: 4.5rem;
+height: 4.5rem;
+border-radius: 9rem;
+font-size: 0.7rem;
+line-height: 1rem;
+ letter-spacing: 0.04rem;
+  font-weight: 400;
+}
+
 .menu-icon {
   margin: 0.1rem 1rem;
   height: 0.8rem;
@@ -112,11 +128,7 @@ button[type="button"] {
   font-size: 1.3rem;
   letter-spacing: 0.1rem;
 }
-.right button {
-  background-color: var(--dark);
-      margin: 1rem 0 0.5rem 3rem;
-  padding: 0.7rem 1rem;
-}
+
 .inputs {
   position: relative;
   margin: 0 auto;
@@ -279,13 +291,11 @@ li.is-submenu-item.is-accordion-submenu-item {
 
 
   .circle {
-  /* content: '';
-  //  display: inline-block;  */
     position: absolute;
-    width: 10rem;
-    height: 10rem;
-    top: 1rem;
-    left: -1rem;
+    width: 7rem;
+    height: 7rem;
+    top: 2rem;
+    left: 20rem;
     z-index: -5;
     margin-right: 0.5rem;
     -moz-border-radius: 5rem;
@@ -295,11 +305,21 @@ li.is-submenu-item.is-accordion-submenu-item {
 }
 
 #iForm .circle {
-    top: -2rem;
-    left: -2rem;
+  top: 0rem;
+  left: -1rem;
 }
 .buttonContainer {
   position: relative;
   height: 3rem;
 }
    
+
+/* Small only */
+@media screen and (max-width: 39.9375em) {
+  h2 {
+    font-size: 1.6rem;
+  }
+  .circle {
+    left: 12rem;
+  }
+}   

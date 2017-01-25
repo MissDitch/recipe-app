@@ -1,5 +1,8 @@
 $(document).foundation()
 
+var myApp = function() {
+  
+
 var result = document.getElementById("result");
 var result2 = document.getElementById("result2");
 var bookList = document.getElementById("bookList");
@@ -60,16 +63,22 @@ function aboutThisApp(e) {
 		hidden = false;
 	}
 	else {
-		aboutApp.innerHTML = "What's this about?";
+		aboutApp.innerHTML = "What's this app about?";
 		hidden = true;
 	}
   showStory.innerHTML = "";
   var string = "";
 	var h4 = document.createElement("h4");
 	h4.innerHTML = "About this app";
-  string = "Do you have some left over ingredients? <br />" +
-  "  Do you want to find recipes where those ingredients are used? <br/> " +
-  " This app lets you store and find recipes by ingredients";
+  string = "I have a lot of spices, herbs and other stuff in my fridge "+
+  " and kitchen cabinet that I don't use often, like nigella and horseradish" +
+  ", and a lot of cookbooks. <br/>But where was that recipe with horseradish again?   <br /> "+
+  " <br/> This app lets me store recipes " +
+  " and specify ingredients that are used.<br /> "+
+  "<br />After that, I just enter an ingredient, and get all the recipes with that " +
+  "particular ingredient. <br /> "  + 
+  "No more time wasted on searching anymore!<br /> ";
+
   var p = document.createElement("p");
   p.innerHTML = string;
   showStory.appendChild(h4);
@@ -89,7 +98,7 @@ function aboutThisApp(e) {
 }
 
 
-/* helper function for sort(), makes sorting of entries case-insensitive   */
+/*  function as argument for sort(), makes sorting of entries case-insensitive   */
 function caseInsensitive(s1, s2) {
   var s1lower = s1.toLowerCase();
   var s2lower = s2.toLowerCase();
@@ -440,6 +449,11 @@ function displayRecipe(ingredient) {
 }
 
 
+  return {
+    init: init
+  }
+
+}();
 
 
-init();
+myApp.init();
