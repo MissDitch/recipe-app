@@ -53,21 +53,25 @@ else {
 
 function init() {
   var aboutApp = document.getElementById("aboutApp");
+  var showAll = document.getElementById("showAll");
   aboutApp.addEventListener("click", aboutThisApp);
-  var hidden = true;
+  showAll.addEventListener("click", showAllRecipes);
+
+  var storyHidden = true;
+  var recHidden = true;
 
 
 function aboutThisApp(e) {   
   e.preventDefault();
   var showStory = document.getElementById("showStory");
 
-  if (hidden) {
+  if (storyHidden) {
 		aboutApp.innerHTML = "I've read enough";
-		hidden = false;
+		storyHidden = false;
 	}
 	else {
 		aboutApp.innerHTML = "What's this app about?";
-		hidden = true;
+		storyHidden = true;
 	}
   showStory.innerHTML = "";
   var string = "";
@@ -87,6 +91,38 @@ function aboutThisApp(e) {
   showStory.appendChild(h4);
 	showStory.appendChild(p);
   }
+
+
+  function showAllRecipes(e) {
+    e.preventDefault();
+    
+    var recipes = document.getElementById("recipes");
+    recipes.innerHTML = "";
+    var div = document.createElement("div");   
+    div.setAttribute("class", "show card-inverse2");  
+    var h4 = document.createElement("h4");
+	  h4.innerHTML = "All Recipes";
+
+  if (recHidden) {
+		showAll.innerHTML = "Hide recipes";
+		recHidden = false;
+	}
+	else {
+		showAll.innerHTML = "Show all recipes";
+		recHidden = true;
+	} 
+    
+    recipeArray.forEach(function(item,index) {         
+        var p = createRecipeItem(item);    
+        div.appendChild(p);         
+  });
+
+  recipes.appendChild(h4);
+  recipes.appendChild(div);
+
+
+  } 
+
   buildCheckboxes(ingrList, ingrArray, "Has ingredient: ");
   buildOptions(bookList, bookArray);  
   buildCheckboxes(typeList, typeArray, "Recipe type: ");
@@ -481,6 +517,8 @@ function displayRecipe(ingredient) {
   }
   clearFormElements(iForm);
 }
+
+
 
   return {
     init: init

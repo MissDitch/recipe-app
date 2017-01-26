@@ -188,24 +188,39 @@ div.show p {
   font-weight: 700;
   color: var(--dark);
 }
+#recipes h4 {
+  font-weight: 700;
+    color: var(--light);
+}
 
-#about {
+#about, #all {
   background-color: var(--accent);
   border-radius: 1rem;
   padding: 1rem;
   width: 20rem;
 	z-index: 10;
 	position: absolute;
-	right: -20rem;
-	top: 7rem;
+	right: -20rem;	
   -webkit-transform: translate(0rem, 0);
   transform: translate(0rem, 0);
   transition: transform 0.3s ease;
+}
+#about {
+  top: 7rem;
+}
+#all {
+  background: var(--dark);
+  top: 14rem;
 }
 #about.slideIn{
 	transform: translate(-21rem,0);
 	-webkit-transform: translate(-21rem,0);
 }
+#all.slideIn {
+  transform: translate(-23rem,0);
+	-webkit-transform: translate(-23rem,0);
+}
+
 
 .title-bar {
   background: var(--dark);
@@ -233,7 +248,7 @@ div.show p {
    list-style-type: none;
    text-align: right;
    padding: 0.2rem;
-   border-top: 0.1rem solid var(--default);
+   border-top: none;
 
  }
  .top-bar-right ul {
@@ -295,6 +310,9 @@ li.is-submenu-item.is-accordion-submenu-item {
 .card-inverse {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.20), inset 0 4px 8px rgba(0,0,0,0.25);
 }
+.card-inverse2 {
+  box-shadow: inset 0px 9px 12px 0px rgba(39,0,59,0.43), inset 0px 3px 5px 1px rgba(39, 0, 59, 0.5);
+}
 
 
   .circle {
@@ -329,4 +347,12 @@ li.is-submenu-item.is-accordion-submenu-item {
   .circle {
     left: 12rem;
   }
+  .top-bar-right ul {
+    width: 70%;
+    float: right;
+  }
+  .top-bar-right ul li {   
+   border-top: 0.1rem solid var(--light);
+
+ }
 }   
