@@ -5,6 +5,7 @@ var myApp = function() {
 
 var result = document.getElementById("result");
 var result2 = document.getElementById("result2");
+var ingrList = document.getElementById("ingrList");
 var bookList = document.getElementById("bookList");
 var typeList = document.getElementById("typeList");
 
@@ -29,11 +30,13 @@ ingrArray.sort();
 var bookArray = ["Smaak van mijn herinnering", "China Modern", "Big Book of Basics", "Joodse Keuken"];
 bookArray.sort();
 
-var typeArray = ["nothing in particular", "vegetarian", "fish"];
+var typeArray = ["vegetarian", "fish", "best ever"];
+typeArray.sort();
+
 var ingrChoices = [];
 var recipeArray = [];
 
-/* // only use this if you want to clear localStorage
+ /* // only use this if you want to clear localStorage
 localStorage.setItem("recipeArray", JSON.stringify(recipeArray));
 
 // and comment out the code below
@@ -84,10 +87,9 @@ function aboutThisApp(e) {
   showStory.appendChild(h4);
 	showStory.appendChild(p);
   }
-
-  buildOptions(bookList, bookArray);
-  buildOptions(typeList, typeArray);
-  buildCheckboxes(ingrArray);
+  buildCheckboxes(ingrList, ingrArray, "Has ingredient: ");
+  buildOptions(bookList, bookArray);  
+  buildCheckboxes(typeList, typeArray, "Recipe type: ");
 
   var inputs = document.querySelectorAll("[type='text'], [type='textarea']");
   inputs.forEach(function(item,index) {
@@ -115,7 +117,6 @@ function clearFormElements(formId)  {
            formId.elements[i].checked = false;
         }
         buildOptions(bookList, bookArray);     
-        buildOptions(typeList, typeArray);       
     }
 }
 
@@ -164,7 +165,7 @@ function addIngredient() {
     if (compare(ingredientInput.value, ingrArray, ingrWarning)) {
      ingrArray.push(ingredientInput.value);  //adds new ingredient to the array
      ingrArray.sort(caseInsensitive);
-     buildCheckboxes(ingrArray);
+     buildCheckboxes(ingrList, ingrArray,  "Has ingredient: ");
      ingredientInput.value = "";
     }
   }
@@ -200,7 +201,7 @@ function addType() {
 
   if (compare(text, typeArray, typeWarning)) {
     typeArray.push(text);
-    buildOptions(typeList, typeArray);
+    buildCheckboxes(typeList, typeArray, "Recipe type:");
     typeInput.value = "";
   }
 }
@@ -208,10 +209,12 @@ function addType() {
 /* --------------  CREATION OF FORM ELEMENTS -----------------------*/ 
 
 //creates individual ingredient checkbox
-function createCheckbox(text, index) {
+function createCheckbox(listID, text, index) {
   var div = document.createElement("div");
   var cb = document.createElement("input");
+  var idString = listID.id; 
   cb.setAttribute("type", "checkbox");
+  cb.setAttribute("name", idString);
   cb.setAttribute("id", "cbox" + index);
   cb.setAttribute("value", text);
  // cb.addEventListener("change", ingredientChoice);
@@ -228,36 +231,46 @@ function createCheckbox(text, index) {
 }
 
 //creates group of ingredient checkboxes
-function buildCheckboxes(array) {
-  var ingrForm = document.getElementById("ingrForm");
-  ingrForm.innerHTML = "";
+function buildCheckboxes(listID, array, string) {
+  var idString = listID.id;  
+  if(idString === "ingrList") {
+     list = ingrList;
+  }
+  else if(idString === "typeList") {
+    var list = typeList;  
+  }
+  else return;
+ 
+  list.innerHTML = "";
 
   var p = document.createElement("p");
-  var text = document.createTextNode("Has ingredient:");
+  var text = document.createTextNode(string);
   p.appendChild(text);
-  ingrForm.appendChild(p);
+  list.appendChild(p);
   var a = array;
   a.forEach(function(item, index) {
-    var cbox = createCheckbox(item, index)
-    ingrForm.appendChild(cbox);
+    var cbox = createCheckbox(listID, item, index)
+    list.appendChild(cbox);
   });
 }
 
 //creates individual option element
-function createOption(text, list) {
+function createOption(text, selectEl) {
+  //var select = selectEl;
   var option = document.createElement("option");
   option.text = text;
  // option.addEventListener("change", ingredientChoice);
-  list.add(option);
+  selectEl.add(option);
 }
 
 //creates dropdown 
-function buildOptions(list, array) {
-  list.length = 0;
+function buildOptions(selectID, array) {
+  var select = document.getElementById("bookList");
+  select.length = 0;
   array.forEach(function(item, index) {
-    createOption(item, list);
-    list.setAttribute("size", 4 );  // list.length shows all items
-    list[0].selected = "true";
+    createOption(item, select);
+    select.setAttribute("size", 4 );  // selectEl.length shows all items
+    select[0].selected = "true";
   });
 }
 
@@ -265,17 +278,19 @@ function buildOptions(list, array) {
 /* --------------  CREATION OF RECIPE -----------------------*/ 
 
 // constructor/prototype pattern
-function Recipe(name,book,page,type,remark) {
+function Recipe(name,book,page,remark) {
   this.name = name;
   this.ingredients = [];
   this.book = book;
   this.page = page;
-  this.type = type;
+  this.types = [];
   this.remark = remark;
 }
-Recipe.prototype.type = "";
+Recipe.prototype.pushType = function(type) {
+  this.types.push(type);
+};
 Recipe.prototype.remark = "";
-Recipe.prototype.addIngredient = function(ingredient) {
+Recipe.prototype.pushIngredient = function(ingredient) {
   this.ingredients.push(ingredient);
 };
 Recipe.prototype.changeIngredients = function(ingredient) {
@@ -290,8 +305,19 @@ Recipe.prototype.changeIngredients = function(ingredient) {
 
 
 /* gathers all checked boxes at submission */
-function chosenIngredients() {
-  var array = document.querySelectorAll('input[type="checkbox"]');
+function chosenCheckbox(listID) {
+  var idString = listID.id;  
+  var array = [];
+  if(idString === "ingrList") {
+     //list = document.getElementById("ingrList");
+     array = document.querySelectorAll('input[name="ingrList"]');
+  }
+  else if(idString === "typeList") {
+    array = document.querySelectorAll('input[name="typeList"]');
+  }
+  else return;
+
+  
   var checkboxValues = [];
   for (var i = 0, length = array.length; i < length; i++) {
     if (array[i].checked == true) {
@@ -323,16 +349,20 @@ function makeRecipe(e) {
   if (page === "") { 
     page = "not specified";
   }
-  var type = typeList.value;
+ // var type = typeList.value;
   var rem = remarksArea.value;
   if (rem === "") { 
     rem = "not specified";
   }
-  var newRec = new Recipe(rec, bookChoice, page, type, rem);
+  var newRec = new Recipe(rec, bookChoice, page, rem);
 
-  var ingredients = chosenIngredients();
+  var ingredients = chosenCheckbox(ingrList);
   ingredients.forEach(function(item,index) {
-    newRec.addIngredient(item);
+    newRec.pushIngredient(item);
+  });  
+  var types = chosenCheckbox(typeList);
+  types.forEach(function(item,index) {
+    newRec.pushType(item);
   });  
 
   showNewRecipe(newRec);
@@ -366,19 +396,23 @@ function createRecipeItem(recipe) {
   p.appendChild(text);
   var br = document.createElement("br");
   p.appendChild(br);
-  var ingredients = "";
-  var length = recipe.ingredients.length;
-  for (var i = 0; i < length; i++) {
-    ingredients += recipe.ingredients[i] + " ";
-  }
-  if (length === 0) { 
+  
+  var ingredients = recipe.ingredients.join(", ");
+  
+  if (recipe.ingredients.length === 0) { 
     ingredients = "not specified";
     }  
+  var type = recipe.types.join(", ");
+  
+  if (recipe.types.length === 0) { 
+    type = "not specified";
+    }  
+
   text = document.createTextNode("ingredient(s): " + ingredients); 
   p.appendChild(text);
   br = document.createElement("br");
   p.appendChild(br);
-  text = document.createTextNode("type: " + recipe.type); 
+  text = document.createTextNode("type: " + type); 
   p.appendChild(text);
   br = document.createElement("br");
   p.appendChild(br);
@@ -447,7 +481,6 @@ function displayRecipe(ingredient) {
   }
   clearFormElements(iForm);
 }
-
 
   return {
     init: init

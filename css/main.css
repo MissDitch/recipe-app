@@ -83,8 +83,8 @@ a {
 }
 button[type="submit"], button[type="button"] {  
   background-color: var(--dark);
-  border: 0.1rem solid var(--accent); 
-  padding: 1rem;
+  border: 0.2rem solid var(--accent); 
+  padding: 0.1rem;
   color: #ffffff;
   font-weight: 500;
   text-align: center;
@@ -110,7 +110,7 @@ button[type="button"] {
 .right button {
   background-color: var(--dark);
 margin: 1rem 0 0.5rem 3rem;
-padding: 0.4rem;
+padding: 0.1rem;
 width: 4.5rem;
 height: 4.5rem;
 border-radius: 9rem;
@@ -118,6 +118,13 @@ font-size: 0.7rem;
 line-height: 1rem;
  letter-spacing: 0.04rem;
   font-weight: 400;
+}
+
+button#bookButton {
+    margin-left: 12rem;
+}
+button#typeButton {
+    margin-left: 6rem;
 }
 
 .menu-icon {
@@ -231,7 +238,7 @@ div.show p {
  }
  .top-bar-right ul {
    background: var(--default);
-   border: 0.1rem solid var(--accent);
+   border: 0.2rem solid var(--accent);
    border-radius: 2rem;   
  }  
  .top-bar-right ul li:first-child {

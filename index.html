@@ -4,7 +4,7 @@
       <meta charset="utf-8">
       <meta http-equiv="x-ua-compatible" content="ie=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title></title>
+      <title>Recipe-app</title>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.4-rc2/foundation.min.css">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation-icons/3.0/foundation-icons.min.css">
       <link rel="stylesheet" href="css/main.css">
@@ -73,34 +73,34 @@
 
 
 <div class="container row small-12  columns">
-  <div class="">
-   <div id="ingrForm" class="left  small-12 medium-6 columns">
-      <p>Has ingredient:</p>
+ <!-- <div class="">  -->
+   <div id="ingrList" class="left  small-12 medium-6 columns">
+     
    </div>
 
     <div id="" class="right baseline small-12 medium-6 columns">
        <label>Add ingredient to list:
        <input id="ingredientInput" class="styleInput card-inverse" type="text" name="ingredientInput"  value="" placeholder="add new ingredient" ></label>
-       <button type="button"id="ingrButton" class="card-2">Insert ingredient</button>
+       <button type="button"id="ingrButton" class="card-2">Insert<br/>ingredient</button>
 
        <div class="warning">
                 <small id="ingrWarning" class=""></small>
               </div>
      </div>
-     </div>
+ <!--    </div>  -->
 
   </div>
 
 <div class="container row small-12 columns">
-   <div class="left small-12 medium-6 columns">
+   <div  class="left small-12 medium-6 columns">
       <label for="bookList">Book:</label>
-     <select id="bookList" class="styleInput card-inverse"  size="5" ></select>
+     <select id="bookList" name="bookList" class="styleInput card-inverse"  size="5" ></select>
    </div>
 
     <div class="right baseline small-12 medium-6 columns">
      <label >Add book to list:
      <input id="bookInput" class="styleInput card-inverse" type="text" name="bookInput"  value="" placeholder="add new title" ></label>
-       <button type="button" id="bookButton" class="card-2" >Insert book</button>
+       <button type="button" id="bookButton" class="card-2" >Insert<br/>book</button>
         <div class="warning">
                 <small id="bookWarning" class=""></small>
               </div>
@@ -120,16 +120,15 @@
 
  <div class="container row small-12 columns">
 
-   <div class="left small-12 medium-6 columns">
-      <label >Recipe type:</label>
-      <select id="typeList"  class="card-inverse" size="2"></select>
+   <div id="typeList" class="left small-12 medium-6 columns">
+    
    </div>
 
         <div class="right baseline small-12 medium-6 columns">
 
        <label>Add Recipe type to list:
-     <input id="typeInput" class="styleInput card-inverse"  type="text" name="typeInput"  value="" placeholder="vegetarian, fish, etc" ></label>
-           <button type="button" id="typeButton" class="card-2" >Insert type</button>
+     <input id="typeInput" class="styleInput card-inverse"  type="text" name="typeInput"  value="" placeholder="vegan, meat, etc" ></label>
+           <button type="button" id="typeButton" class="card-2" >Insert<br/>type</button>
            <div class="warning">
                 <small id="typeWarning" class=""></small>
               </div>
